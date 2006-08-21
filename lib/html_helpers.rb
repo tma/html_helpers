@@ -19,12 +19,16 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module ActionView::Helpers::TextHelper
-  def encode_entities(string)
-    HTMLEntities.encode_entities(string, :basic, :named)
-  end
+module Leftbee
+  module HTMLHelper
+    def encode_entities(string)
+      HTMLEntities.encode_entities(string, :basic, :named)
+    end
 
-  def decode_entities(string)
-    HTMLEntities.decode_entities(string)
+    def decode_entities(string)
+      HTMLEntities.decode_entities(string)
+    end
   end
 end
+
+ActionView::Base.send(:include, Leftbee::HTMLHelper)
