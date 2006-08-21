@@ -1,5 +1,5 @@
-HtmlHelpers 1.1
-===============
+HtmlHelpers 1.1.1
+=================
 
 This plugin lets you encode and decode (UTF-8) strings using HTML entities.
 Two new methods will be automatically available in your views:

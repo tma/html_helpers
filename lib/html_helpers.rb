@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 module Leftbee
-  module HTMLHelper
+  module HTMLHelpers
     def encode_entities(string)
       HTMLEntities.encode_entities(string, :basic, :named)
     end
@@ -31,4 +31,4 @@ module Leftbee
   end
 end
 
-ActionView::Base.send(:include, Leftbee::HTMLHelper)
+ActionView::Base.send(:include, Leftbee::HTMLHelpers)
