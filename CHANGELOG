@@ -1,3 +1,9 @@
+*1.1.2* 28 May 2008
+
+* Me <Thomas Maurer> pushed the plugin to GitHub (mainly for using as git submodule)
+* module Leftbee::HTMLHelpers renamed to generic and consitent way of classes in 
+  Rails (like HTML::Sanitizer): HTML::EntityCoder
+
 *1.1.1* 22 August 2006
 
 * module Leftbee::HTMLHelper renamed to Leftbee::HTMLHelpers to be consistent with the name of the plugin and the documentation!

@@ -1,4 +1,4 @@
-HtmlHelpers 1.1.1
+HTML::EntityCoder
 =================
 
 This plugin lets you encode and decode (UTF-8) strings using HTML entities.
@@ -15,21 +15,21 @@ Two new methods will be automatically available in your views:
 => "Über geek"
 
 
-What's new in 1.1
-=================
+Using Anywhere
+==============
 
-Now it's possible to include the helpers in other classes easily by just including Leftbee::HTMLHelpers in your class.
+Now it's possible to include the helpers in other classes easily by just including HTML::EntityCoder in your class.
 
 If you *really* need to to use the helpers in a model you can do it like this:
 
 class Person < ActiveRecord::Base
-  include Leftbee::HTMLHelpers
+  include HTML::EntityCoder
 end
 
 or a controller:
 
 class PersonController < ApplicationController
-  include Leftbee::HTMLHelpers
+  include HTML::EntityCoder
 end
 
 etc.
