@@ -163,4 +163,3 @@ module HTMLEntities
   extend self
   
 end
-
