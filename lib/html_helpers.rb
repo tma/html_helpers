@@ -19,8 +19,8 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module Leftbee
-  module HTMLHelpers
+module HTML
+  module EntityCoder
     def encode_entities(string)
       HTMLEntities.encode_entities(string, :basic, :named)
     end
@@ -31,4 +31,4 @@ module Leftbee
   end
 end
 
-ActionView::Base.send(:include, Leftbee::HTMLHelpers)
+ActionView::Base.send(:include, HTML::EntityCoder)
