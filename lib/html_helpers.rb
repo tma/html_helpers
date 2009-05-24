@@ -31,4 +31,4 @@ module HTML
   end
 end
 
-ActionView::Base.send(:include, HTML::EntityCoder)
+ActionView::Base.send(:include, HTML::EntityCoder) if defined?(ActionView)
