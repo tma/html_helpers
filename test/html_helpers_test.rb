@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 require "test/unit"
 require "action_view"
-require "init"
+require 'html_helpers'
 
 class HtmlEntityCoderTest < Test::Unit::TestCase
   include HTML::EntityCoder
