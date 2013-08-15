@@ -70,7 +70,6 @@ module HTMLEntities
 
     BASIC_ENTITY_REGEXP = /[<>'"&]/
 
-    $KCODE = "UTF-8"
     # UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc0-\xfd][\x80-\xbf]+/
     UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc2\xa0-\xc3\xbf]+/
 
