@@ -70,7 +70,9 @@ module HTMLEntities
 
     BASIC_ENTITY_REGEXP = /[<>'"&]/
 
-    UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc0-\xfd][\x80-\xbf]+/
+    $KCODE = "UTF-8"
+    # UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc0-\xfd][\x80-\xbf]+/
+    UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc2\xa0-\xc3\xbf]+/
 
     ENCODE_ENTITIES_COMMAND_ORDER = { 
       :basic => 0,
@@ -139,7 +141,8 @@ module HTMLEntities
         output = (output || string).gsub(Data::BASIC_ENTITY_REGEXP) {
           # It's safe to use the simpler [0] here because we know
           # that the basic entities are ASCII.
-          '&' << Data::REVERSE_MAP[$&[0]] << ';'
+          c = Data::REVERSE_MAP[$&.unpack("U")[0]]
+          '&' << (c || $&[0]) << ';'
         }
       when :named
         # Test everything except printable ASCII 

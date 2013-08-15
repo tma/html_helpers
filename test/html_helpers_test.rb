@@ -1,7 +1,7 @@
 require "test/unit"
 require "action_view"
-require "init"
-
+require "htmlentities"
+require "html_helpers"
 class HtmlEntityCoderTest < Test::Unit::TestCase
   include HTML::EntityCoder
 
