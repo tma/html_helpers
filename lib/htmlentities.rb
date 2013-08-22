@@ -56,8 +56,8 @@ module HTMLEntities
       'tilde'     => 732,       'ensp'      => 8194,      'emsp'      => 8195,
       'thinsp'    => 8201,      'zwnj'      => 8204,      'zwj'       => 8205,
       'lrm'       => 8206,      'rlm'       => 8207,      'ndash'     => 8211,
-      'mdash'     => 8212,      'lsquo'     => 8216,      'rsquo'     => 8217,
-      'sbquo'     => 8218,      'ldquo'     => 8220,      'rdquo'     => 8221,
+      'mdash'     => 8212,      'lsquo'     => 39,      'rsquo'     => 39,
+      'sbquo'     => 44,      'ldquo'     => 34,      'rdquo'     => 34,
       'bdquo'     => 8222,      'dagger'    => 8224,      'Dagger'    => 8225,
       'hellip'    => 8230,      'permil'    => 8240,      'lsaquo'    => 8249,
       'rsaquo'    => 8250,      'euro'      => 8364 
