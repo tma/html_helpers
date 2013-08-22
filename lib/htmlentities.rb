@@ -92,7 +92,9 @@ module HTMLEntities
   #
   def decode_entities(string)
     return string.gsub(Data::NAMED_ENTITY_REGEXP) { 
-      (cp = Data::MAP[$1]) ? [cp].pack('U') : $& 
+      a = (cp = Data::MAP[$1]) ? [cp].pack('U') : $& 
+      puts [$1, $&, a].inspect
+      a
     }.gsub(/&#([0-9]{1,7});|&#x([0-9a-f]{1,6});/i) { 
       $1 ? [$1.to_i].pack('U') : [$2.to_i(16)].pack('U') 
     }
