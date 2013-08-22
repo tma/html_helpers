@@ -91,8 +91,8 @@ module HTMLEntities
   # Unknown named entities are not converted
   #
   def decode_entities(string)
-    return string.gsub(Data::NAMED_ENTITY_REGEXP) do |e| 
-      base = e.to_s.gsub(/&|;/,'')
+    string.to_s.gsub(Data::NAMED_ENTITY_REGEXP) do |e| 
+      base = e.gsub(/&|;/,'')
       (cp = Data::MAP[base]) ? [cp].pack('U') : e.to_s
     end.gsub(/&#([0-9]{1,7});|&#x([0-9a-f]{1,6});/i) { 
       $1 ? [$1.to_i].pack('U') : [$2.to_i(16)].pack('U') 
