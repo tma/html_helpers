@@ -41,13 +41,13 @@ class HtmlEntityCoderTest < Test::Unit::TestCase
   end
   
   def test_named_entity_decoding
-    assert_equal decode_entities("Michael&rsquo;s degree is in &quot;ICS&quot;"), "Michael’s degree is in \"ICS\""
+    assert_equal decode_entities("Michael&rsquo;s degree is in &quot;ICS&quot;"), "Michael's degree is in \"ICS\""
   end
   
   def test_string_encoding
     test_str = "Michael&rsquo;s degree is in &quot;ICS&quot;".encode("ASCII-8BIT")
     assert_equal test_str.encoding.to_s, "ASCII-8BIT"
     answer_str = decode_entities(test_str)
-    assert_equal answer_str, "Michael’s degree is in \"ICS\""
+    assert_equal answer_str, "Michael's degree is in \"ICS\""
   end
 end
