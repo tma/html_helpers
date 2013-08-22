@@ -39,4 +39,15 @@ class HtmlEntityCoderTest < Test::Unit::TestCase
     assert_equal decode_entities("Ursache sind die hohen Zufl&uuml;sse des Regen, der Teile des Bayerischen Waldes entw&auml;ssert.\nDort ist immer noch die Schneeschmelze im Gange, au&szlig;erdem hat es Freitag dort teils kr&auml;ftige Schauer gegeben."),
                                  "Ursache sind die hohen Zuflüsse des Regen, der Teile des Bayerischen Waldes entwässert.\nDort ist immer noch die Schneeschmelze im Gange, außerdem hat es Freitag dort teils kräftige Schauer gegeben."
   end
+  
+  def test_named_entity_decoding
+    assert_equal decode_entities("Michael&rsquo;s degree is in &quot;ICS&quot;"), "Michael’s degree is in \"ICS\""
+  end
+  
+  def test_string_encoding
+    test_str = "Michael&rsquo;s degree is in &quot;ICS&quot;".encode("ASCII-8BIT")
+    assert_equal test_str.encoding.to_s, "ASCII-8BIT"
+    answer_str = decode_entities(test_str)
+    assert_equal answer_str, "Michael’s degree is in \"ICS\""
+  end
 end
