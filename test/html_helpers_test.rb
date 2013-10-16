@@ -45,8 +45,8 @@ class HtmlEntityCoderTest < Test::Unit::TestCase
   end
 
   def test_string_encoding
-    test_str = "Michael&rsquo;s degree is in &quot;ICS&quot;".encode("ASCII-8BIT")
-    assert_equal test_str.encoding.to_s, "ASCII-8BIT"
+    test_str = "Michael&rsquo;s degree is in &quot;ICS&quot;".encode("Windows-1252")
+    assert_equal test_str.encoding.to_s, "Windows-1252"
     answer_str = decode_entities(test_str)
     assert_equal answer_str, "Michael's degree is in \"ICS\""
   end
@@ -54,6 +54,6 @@ class HtmlEntityCoderTest < Test::Unit::TestCase
   def test_ndash_encoding
     test_str = "&deg;&ndash;"
     answer_str = decode_entities(test_str)
-    assert_equal answer_str, "°-"
+    assert_equal answer_str, "°–"
   end
 end
