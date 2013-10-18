@@ -1,7 +1,7 @@
 require "test/unit"
 require "action_view"
-require "init"
-
+require "htmlentities"
+require "html_helpers"
 class HtmlEntityCoderTest < Test::Unit::TestCase
   include HTML::EntityCoder
 
@@ -31,12 +31,47 @@ class HtmlEntityCoderTest < Test::Unit::TestCase
   end
 
   def test_text_encoding
-    assert_equal encode_entities("Ursache sind die hohen Zuflüsse des Regen, der Teile des Bayerischen Waldes entwässert.\nDort ist immer noch die Schneeschmelze im Gange, außerdem hat es Freitag dort teils kräftige Schauer gegeben."),
-                                 "Ursache sind die hohen Zufl&uuml;sse des Regen, der Teile des Bayerischen Waldes entw&auml;ssert.\nDort ist immer noch die Schneeschmelze im Gange, au&szlig;erdem hat es Freitag dort teils kr&auml;ftige Schauer gegeben."
+    test_str = "Zufl&uuml;sse entw&auml;ssert.\nau&szlig;erdem kr&auml;ftige."
+    assert_equal "UTF-8", test_str.encoding.name
+
+    answer_str = encode_entities("Zuflüsse entwässert.\naußerdem kräftige.")
+    assert_equal "UTF-8", answer_str.encoding.name
+
+    assert_equal  answer_str, test_str
   end
 
   def test_text_decoding
-    assert_equal decode_entities("Ursache sind die hohen Zufl&uuml;sse des Regen, der Teile des Bayerischen Waldes entw&auml;ssert.\nDort ist immer noch die Schneeschmelze im Gange, au&szlig;erdem hat es Freitag dort teils kr&auml;ftige Schauer gegeben."),
-                                 "Ursache sind die hohen Zuflüsse des Regen, der Teile des Bayerischen Waldes entwässert.\nDort ist immer noch die Schneeschmelze im Gange, außerdem hat es Freitag dort teils kräftige Schauer gegeben."
+    test_str = "Zuflüsse entwässert.\naußerdem kräftige."
+    assert_equal "UTF-8", test_str.encoding.name
+    
+    answer_str = decode_entities("Zufl&uuml;sse entw&auml;ssert.\nau&szlig;erdem kr&auml;ftige.")
+    assert_equal "ISO-8859-1", answer_str.encoding.name
+    
+    assert_equal test_str, answer_str.encode("UTF-8")
+    assert_equal "Zuflüsse entwässert.\naußerdem kräftige.".encode("ISO-8859-1"), answer_str
+  end
+  
+  def test_named_entity_decoding
+    assert_equal [146, 34, 148], decode_entities("&rsquo;&quot;&rdquo;").bytes.to_a
+  end
+
+  def test_string_encoding
+    test_str = "Michael&rsquo;s degree is in &quot;ICS&quot;"
+    assert_equal 'UTF-8', test_str.encoding.name
+
+    answer_str = decode_entities(test_str)
+    
+    assert_equal "ISO-8859-1", answer_str.encoding.name
+    # assert_equal "Michael’s degree is in \"ICS\"".encode("ISO-8859-1"), answer_str
+  end
+  
+  def test_ndash_encoding
+    test_str = "&deg;&ndash;"
+    assert_equal 'UTF-8', test_str.encoding.name 
+
+    answer_str = decode_entities(test_str)
+    assert_equal 'ISO-8859-1', answer_str.encoding.name 
+
+    assert_equal [176, 150], answer_str.bytes.to_a
   end
 end

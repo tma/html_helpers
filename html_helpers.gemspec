@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "html_helpers"
-  s.version     = '1.1.3'
+  s.version     = '1.1.4'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Ruben Nine", "Thomas Maurer"]
   s.email       = ["tma@freshbit.ch"]

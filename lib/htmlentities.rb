@@ -23,7 +23,7 @@ module HTMLEntities
       'pound'     => 163,       'yen'       => 165,       'brvbar'    => 166,
       'sect'      => 167,       'uml'       => 168,       'copy'      => 169,
       'ordf'      => 170,       'laquo'     => 171,       'not'       => 172,
-      'shy'       => 173,       'reg'       => 174,       'trade'     => 8482,
+      'shy'       => 173,       'reg'       => 174,       'trade'     => 153,
       'macr'      => 175,       'deg'       => 176,       'plusmn'    => 177,
       'sup2'      => 178,       'sup3'      => 179,       'acute'     => 180,
       'micro'     => 181,       'para'      => 182,       'middot'    => 183,
@@ -51,16 +51,16 @@ module HTMLEntities
       'ouml'      => 246,       'oslash'    => 248,       'ugrave'    => 249,
       'uacute'    => 250,       'ucirc'     => 251,       'uuml'      => 252,
       'yacute'    => 253,       'thorn'     => 254,       'yuml'      => 255,
-      'OElig'     => 338,       'oelig'     => 339,       'Scaron'    => 352,
-      'scaron'    => 353,       'Yuml'      => 376,       'circ'      => 710,
-      'tilde'     => 732,       'ensp'      => 8194,      'emsp'      => 8195,
-      'thinsp'    => 8201,      'zwnj'      => 8204,      'zwj'       => 8205,
-      'lrm'       => 8206,      'rlm'       => 8207,      'ndash'     => 8211,
-      'mdash'     => 8212,      'lsquo'     => 8216,      'rsquo'     => 8217,
-      'sbquo'     => 8218,      'ldquo'     => 8220,      'rdquo'     => 8221,
-      'bdquo'     => 8222,      'dagger'    => 8224,      'Dagger'    => 8225,
-      'hellip'    => 8230,      'permil'    => 8240,      'lsaquo'    => 8249,
-      'rsaquo'    => 8250,      'euro'      => 8364 
+      'OElig'     => 140,       'oelig'     => 156,       'Scaron'    => 138,
+      'scaron'    => 154,       'Yuml'      => 255,       'circ'      => 136,
+      'tilde'     => 152,       'ensp'      => 32,        'emsp'      => 32,
+      'thinsp'    => 32,        'zwnj'      => 32,        'zwj'       => 32,
+      'lrm'       => 145,       'rlm'       => 146,       'ndash'     => 150,
+      'mdash'     => 151,       'lsquo'     => 145,       'rsquo'     => 146,
+      'sbquo'     => 130,       'ldquo'     => 147,       'rdquo'     => 148,
+      'bdquo'     => 132,       'dagger'    => 134,       'Dagger'    => 135,
+      'hellip'    => 133,       'permil'    => 137,       'lsaquo'    => 139,
+      'rsaquo'    => 155,       'euro'      => 128 
     }
 
     MIN_LENGTH = MAP.keys.map{ |a| a.length }.min
@@ -70,7 +70,8 @@ module HTMLEntities
 
     BASIC_ENTITY_REGEXP = /[<>'"&]/
 
-    UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc0-\xfd][\x80-\xbf]+/
+    # UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc0-\xfd][\x80-\xbf]+/
+    UTF8_NON_ASCII_REGEXP = /[\x00-\x1f]|[\xc2\xa0-\xc3\xbf]+/
 
     ENCODE_ENTITIES_COMMAND_ORDER = { 
       :basic => 0,
@@ -90,11 +91,13 @@ module HTMLEntities
   # Unknown named entities are not converted
   #
   def decode_entities(string)
-    return string.gsub(Data::NAMED_ENTITY_REGEXP) { 
-      (cp = Data::MAP[$1]) ? [cp].pack('U') : $& 
-    }.gsub(/&#([0-9]{1,7});|&#x([0-9a-f]{1,6});/i) { 
-      $1 ? [$1.to_i].pack('U') : [$2.to_i(16)].pack('U') 
-    }
+    return nil if string.nil?
+    string.gsub(Data::NAMED_ENTITY_REGEXP) do |e| 
+      base = e.gsub(/&|;/,'')
+      (cp = Data::MAP[base]) ? [cp].pack('C') : e.to_s
+    end.gsub(/&#([0-9]{1,7});|&#x([0-9a-f]{1,6});/i) { 
+      $1 ? [$1.to_i].pack('C') : [$2.to_i(16)].pack('C')
+    }.force_encoding("ISO-8859-1")
   end
   
   #
@@ -139,7 +142,8 @@ module HTMLEntities
         output = (output || string).gsub(Data::BASIC_ENTITY_REGEXP) {
           # It's safe to use the simpler [0] here because we know
           # that the basic entities are ASCII.
-          '&' << Data::REVERSE_MAP[$&[0]] << ';'
+          c = Data::REVERSE_MAP[$&.unpack("U")[0]]
+          '&' << (c || $&[0]) << ';'
         }
       when :named
         # Test everything except printable ASCII 
