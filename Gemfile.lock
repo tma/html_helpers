@@ -1,3 +1,8 @@
+PATH
+  remote: .
+  specs:
+    html_helpers (1.1.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -34,4 +39,5 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack (~> 3)
+  html_helpers!
   rake
