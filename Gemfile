@@ -4,5 +4,5 @@ gemspec
 
 group :dev do
   gem 'rake'
-  gem 'actionpack', '~>3'
+  gem 'actionpack', '~>5'
 end
